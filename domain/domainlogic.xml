@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain xmlns="urn:docs:domain"
+		  xmlns:xlink="http://www.w3.org/1999/xlink"
+		  xmlns:html="http://www.w3.org/1999/xhtml"
+		  xlink:title="Тестовая документация">
+
+	<domain xlink:type="locator" xlink:href="domainlogic/actors.xml" />
+	<domain xlink:type="locator" xlink:href="domainlogic/school.xml" />
+
+</domain>

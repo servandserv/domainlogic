@@ -1,0 +1,268 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:svg="http://www.w3.org/2000/svg" xml:lang="ru"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta><meta name="keywords" content="docs usecases"></meta><link href="http://jumly.tmtk.net/release/jumly.min.css" rel="stylesheet"></link><script src="http://code.jquery.com/jquery-2.1.0.min.js">;</script><script src="http://coffeescript.org/extras/coffee-script.js">;</script><script src="http://jumly.tmtk.net/release/jumly.min.js">;</script><style type="text/css">
+    body {
+		padding: 2em 1em 2em 70px;margin: 0;font-family: sans-serif;color: black;background: white;
+	}
+	:link { color: #00C; background: transparent }
+	:visited { color: #609; background: transparent }
+	a:active { color: #C00; background: transparent }
+	a:link img, a:visited img { border-style: none }
+
+	h1, h2, h3, h4, h5, h6 { text-align: left }
+	h1, h2, h3, h4 { color: #005A9C; background: white }
+	h1 { font: 170% sans-serif }
+	h2 { font: 140% sans-serif }
+	h3 { font: 120% sans-serif }
+	h4 { font: bold 100% sans-serif }
+	h5 { font: italic 100% sans-serif }
+	h6 { font: small-caps 100% sans-serif }
+	/*@media print {*/
+	svg,img { max-width:100%; margin:0; }
+	polygon { fill: #ffffff; }
+	svg > g > g polygon { stroke: grey; stroke-width: 2px; }
+	svg > g > g > title + g polygon { fill: lightgrey; }
+	/*}*/
+
+	dt, dd { margin-top: 0; margin-bottom: 0 }
+	dt { font-weight: bold; color:#DB3706; }
+	dt:after {content:':'}
+	dd li {list-style: none;}
+
+	table { margin: 1em 1em; border-collapse: collapse; padding:0; }
+	td, th { border-bottom: solid 1px #005A9C; padding: 4px 10px; }
+
+	p { margin-top: 0.6em; margin-bottom: 0.6em; }
+	strong {font-weight:bold;}
+	strong:before {content: '\00AB';}
+	strong:after {content:'\00BB';}
+	pre { margin-left: 2em; background:#eeeeee;border:solid 2px #cccccc;}
+	code { font:120% monospace; }
+
+
+	.todo {font-style: italic; color: red;}
+	.error {font-style: italic; color: red;}
+	.disabled { color:#eeeeee; }
+
+	/* Автонумерация */
+	body,h1 {
+		counter-reset: h2counter;
+	}
+	h2:before {
+		content: counter(h2counter) ".\0000a0\0000a0";
+		counter-increment: h2counter;
+	}
+	h2 {
+		counter-reset: h3counter;
+	}
+	h3:before {
+		content: counter(h2counter) "." counter(h3counter) ".\0000a0\0000a0";
+		counter-increment: h3counter;
+	}
+	.ToCLink {position:absolute; right:20px;text-decoration: none;}
+	.comments { font-size: 80%; color: #3c3c3c; }
+	.comments:before { content:'*' }
+
+	.contents li {list-style: none;}
+	.contents ol {counter-reset: licounter;}
+	.contents ol li:before {
+		counter-increment: licounter;
+		content: counter(licounter) ".\0000a0\0000a0";
+	}
+	.contents ol ol {counter-reset: lilicounter;}
+	.contents ol ol li:before {
+		counter-increment: lilicounter;
+		content: counter(licounter) "." counter(lilicounter) ".\0000a0\0000a0";
+	}
+
+	#header {
+		position:fixed; top:0px; left:0px; z-index:100; height:141px;
+		width:30px; background:#FFFFFF;font-size:90%;
+
+	}
+	#header p { font: 120% sans-serif; background:rgb(0,90,156); color: #fff; font-weight:bold;}
+	#header div { position:absolute; left:-10000px; }
+	#header:hover { width:400px; height:100%; background:rgb(0,90,156); padding-right: 50px; }
+	#header svg { position:absolute; top:40px; left: 0px; }
+	#header:hover { overflow: auto; }
+	#header:hover div { position:relative; left:40px; top:10px; }
+	#header ul { padding-left:0px; margin:0; }
+	#header ul ul { padding-left:10px; }
+	#header ul li {list-style:none;padding-top:10px; font-size:100%;}
+	#header ul li li {list-style:none;padding-top:4px; font-size:90%;}
+	#header a { color:#fff; }
+
+	#toc > ul > li { font-size:140%; }
+	#toc li { list-style:none; }
+</style><title>Прецеденты использования</title><script type="text/javascript">
+					window.onload = function(){
+						var clName, svgEls;
+						if (document.location.hash) {
+							document.location = document.location;
+						}
+						svgEls = document.getElementsByTagName('svg');
+						for(var i=0;i < svgEls.length; i++) {
+							clName = svgEls[i].getAttribute('class');
+							if(clName == 'graph') {
+								svgEls[i].onclick = function() {
+									if(this.style.width) {
+										this.style.width = null;
+									} else {
+										this.style.width = '20%';
+									}
+								}
+								svgEls[i].onclick();
+							}
+						}
+					}
+				</script></head><body><div id="header"><svg xmlns="http://www.w3.org/2000/svg" height="116px" width="24px" style="background:rgb(0,90,156);" viewBox="0 0 24 116"><g transform="translate(-3,116)"><text x="10" y="20" fill="white" transform="rotate(-90)" style="font-size:16px;font-family:Avenir;">Domain logic</text></g></svg><div><p>Content</p><ul><li><a href="domain.html#">Модель предметной области</a><ul><li><a href="domain.html#domainlogic">Тестовая документация</a><ul><li><a href="domain.html#domainlogic:actors">Участники</a></li><li><a href="domain.html#domainlogic:school">История школы</a></li></ul></li></ul></li><li><a href="ucpackage.html#">Прецеденты использования</a><ul><li><a href="ucpackage.html#domainlogic">История школы</a></li></ul></li></ul></div></div><h1>Прецеденты использования</h1><hr></hr><h2 id="domainlogic">История школы</h2><h3>
+				Диаграмма прецедентов
+		</h3><svg xmlns="http://www.w3.org/2000/svg" viewBox="0.00 0.00 784.00 207.00" id="graphd" class="graph" style="max-width:784pt;">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 203)">
+<title>usecase_domainlogic</title>
+<polygon fill="white" stroke="none" points="-4,4 -4,-203 780,-203 780,4 -4,4"></polygon>
+<g id="clust2" class="cluster"><title>cluster_package</title>
+<polygon fill="none" stroke="black" stroke-width="2" stroke-dasharray="5,2" points="136,-8 136,-191 768,-191 768,-8 136,-8"></polygon>
+</g>
+
+<g id="node1" class="node"><title>domainlogic_User</title>
+<g id="a_node1"><a xmlns:ns_1="http://www.w3.org/1999/xlink" ns_1:href="../../domainlogic/docs/domain.html#domainlogic:actors:User" title="domainlogic:User">
+<polygon fill="none" stroke="grey" stroke-width="2" points="0,-49 0,-95 106,-95 106,-49 0,-49"></polygon>
+<text text-anchor="middle" x="53" y="-79.8" font-family="Tahoma" font-size="14.00" fill="blue" style="text-decoration:underline;">Пользователь</text>
+<polyline fill="none" stroke="grey" stroke-width="2" points="0,-72 106,-72 "></polyline>
+<text text-anchor="middle" x="53" y="-56.8" font-family="Tahoma" font-size="14.00" fill="blue" style="text-decoration:underline;">«actor»</text>
+</a>
+</g>
+</g>
+
+<g id="node2" class="node"><title>domainlogic_In</title>
+<g id="a_node2"><a xmlns:ns_1="http://www.w3.org/1999/xlink" ns_1:href="../../domainlogic/docs/ucpackage.html#domainlogic:In" title="domainlogic:In">
+<ellipse fill="none" stroke="grey" stroke-width="2" cx="192" cy="-72" rx="48.1667" ry="37.4533"></ellipse>
+<text text-anchor="middle" x="192" y="-83.3" font-family="Tahoma" font-size="14.00" fill="blue" style="text-decoration:underline;">Заходит</text>
+<text text-anchor="middle" x="192" y="-68.3" font-family="Tahoma" font-size="14.00" fill="blue" style="text-decoration:underline;">на</text>
+<text text-anchor="middle" x="192" y="-53.3" font-family="Tahoma" font-size="14.00" fill="blue" style="text-decoration:underline;">сайт</text>
+</a>
+</g>
+</g>
+
+<g id="edge1" class="edge"><title>domainlogic_User-&gt;domainlogic_In</title>
+<path fill="none" stroke="black" d="M106.185,-72C118.586,-72 131.745,-72 143.903,-72"></path>
+</g>
+
+<g id="node3" class="node"><title>domainlogic_UseTimeMachine</title>
+<g id="a_node3"><a xmlns:ns_1="http://www.w3.org/1999/xlink" ns_1:href="../../domainlogic/docs/ucpackage.html#domainlogic:UseTimeMachine" title="domainlogic:UseTimeMachine">
+<ellipse fill="none" stroke="grey" stroke-width="2" cx="418" cy="-53" rx="63.7795" ry="37.4533"></ellipse>
+<text text-anchor="middle" x="418" y="-64.3" font-family="Tahoma" font-size="14.00" fill="blue" style="text-decoration:underline;">Использует</text>
+<text text-anchor="middle" x="418" y="-49.3" font-family="Tahoma" font-size="14.00" fill="blue" style="text-decoration:underline;">'машину</text>
+<text text-anchor="middle" x="418" y="-34.3" font-family="Tahoma" font-size="14.00" fill="blue" style="text-decoration:underline;">времени'</text>
+</a>
+</g>
+</g>
+
+<g id="edge2" class="edge"><title>domainlogic_In-&gt;domainlogic_UseTimeMachine</title>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M239.958,-68.017C270.316,-65.4419 310.431,-62.0393 344.799,-59.1242"></path>
+<polygon fill="grey" stroke="black" points="354.794,-58.2764 345.21,-63.6056 349.812,-58.699 344.83,-59.1217 344.83,-59.1217 344.83,-59.1217 349.812,-58.699 344.45,-54.6378 354.794,-58.2764 354.794,-58.2764"></polygon>
+<text text-anchor="middle" x="288" y="-70.8" font-family="Times,serif" font-size="14.00">«proceed»</text>
+</g>
+
+<g id="node4" class="node"><title>domainlogic_UseDocsFeed</title>
+<g id="a_node4"><a xmlns:ns_1="http://www.w3.org/1999/xlink" ns_1:href="../../domainlogic/docs/ucpackage.html#domainlogic:UseDocsFeed" title="domainlogic:UseDocsFeed">
+<ellipse fill="none" stroke="grey" stroke-width="2" cx="418" cy="-146" rx="81.135" ry="37.4533"></ellipse>
+<text text-anchor="middle" x="418" y="-157.3" font-family="Tahoma" font-size="14.00" fill="blue" style="text-decoration:underline;">Просматривает</text>
+<text text-anchor="middle" x="418" y="-142.3" font-family="Tahoma" font-size="14.00" fill="blue" style="text-decoration:underline;">ленту</text>
+<text text-anchor="middle" x="418" y="-127.3" font-family="Tahoma" font-size="14.00" fill="blue" style="text-decoration:underline;">документов</text>
+</a>
+</g>
+</g>
+
+<g id="edge3" class="edge"><title>domainlogic_In-&gt;domainlogic_UseDocsFeed</title>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M236.455,-86.3557C266.343,-96.2292 306.811,-109.598 341.86,-121.177"></path>
+<polygon fill="grey" stroke="black" points="351.588,-124.391 340.681,-125.527 346.841,-122.822 342.093,-121.254 342.093,-121.254 342.093,-121.254 346.841,-122.822 343.505,-116.981 351.588,-124.391 351.588,-124.391"></polygon>
+<text text-anchor="middle" x="288" y="-114.8" font-family="Times,serif" font-size="14.00">«proceed»</text>
+</g>
+
+<g id="node5" class="node"><title>domainlogic_LookAtDocument</title>
+<g id="a_node5"><a xmlns:ns_1="http://www.w3.org/1999/xlink" ns_1:href="../../domainlogic/docs/ucpackage.html#domainlogic:LookAtDocument" title="domainlogic:LookAtDocument">
+<ellipse fill="none" stroke="grey" stroke-width="2" cx="678" cy="-124" rx="81.135" ry="58.8803"></ellipse>
+<text text-anchor="middle" x="678" y="-150.3" font-family="Tahoma" font-size="14.00" fill="blue" style="text-decoration:underline;">Просматривает</text>
+<text text-anchor="middle" x="678" y="-135.3" font-family="Tahoma" font-size="14.00" fill="blue" style="text-decoration:underline;">информацию</text>
+<text text-anchor="middle" x="678" y="-120.3" font-family="Tahoma" font-size="14.00" fill="blue" style="text-decoration:underline;">по</text>
+<text text-anchor="middle" x="678" y="-105.3" font-family="Tahoma" font-size="14.00" fill="blue" style="text-decoration:underline;">конкретному</text>
+<text text-anchor="middle" x="678" y="-90.3" font-family="Tahoma" font-size="14.00" fill="blue" style="text-decoration:underline;">документу</text>
+</a>
+</g>
+</g>
+
+<g id="edge4" class="edge"><title>domainlogic_UseDocsFeed-&gt;domainlogic_LookAtDocument</title>
+<path fill="none" stroke="black" stroke-dasharray="5,2" d="M498.162,-139.25C526.252,-136.854 558.069,-134.141 586.997,-131.675"></path>
+<polygon fill="grey" stroke="black" points="597.098,-130.813 587.517,-136.147 592.116,-131.238 587.134,-131.663 587.134,-131.663 587.134,-131.663 592.116,-131.238 586.752,-127.179 597.098,-130.813 597.098,-130.813"></polygon>
+<text text-anchor="middle" x="548" y="-139.8" font-family="Times,serif" font-size="14.00">«proceed»</text>
+</g>
+</g>
+</svg><h3>
+				Пользователи
+			</h3><ul><li><a href="../../domainlogic/docs/domain.html#domainlogic:actors:User">Пользователь</a></li></ul><h3>
+				Прецеденты пакета
+			</h3><ul><li><a href="#domainlogic:In">Заходит на сайт</a></li><li><a href="#domainlogic:UseTimeMachine">Использует 'машину времени'</a></li><li><a href="#domainlogic:UseDocsFeed">Просматривает ленту документов</a></li><li><a href="#domainlogic:LookAtDocument">Просматривает информацию по конкретному документу</a></li></ul><h4 id="domainlogic:In">Заходит на сайт</h4><p><small>URN: domainlogic:In</small></p><p style="font-size:90%;padding-left:20px;">
+		
+			<a href="../../domainlogic/docs/domain.html#domainlogic:actors:User" title="">Пользователь</a> 
+			переходит по ссылке http://www..... и попадает на головную 
+			страницу сайта. Головная страница сайта предоставляет интерфейсы для 
+			навигации по сайту, поисковую строку, 'машину времени'(интерфейс которой состоит из элемента управления
+			и ленты с <a href="../../test/docs/domain.html#test:docs:school:Documents" title="">коллекциями документов</a>).
+		
+	</p><h4 id="domainlogic:UseTimeMachine">Использует 'машину времени'</h4><p><small>URN: domainlogic:UseTimeMachine</small></p><p style="font-size:90%;padding-left:20px;">
+		
+			Находясь на главной странице сайта, <a href="../../domainlogic/docs/domain.html#domainlogic:actors:User" title="">Пользователь</a>
+			осуществляет навигацию по коллекциям документов за разные периоды времени.
+			Для того, чтобы это сделать он использует элемент управления 'TimeMachine'.
+		
+		
+			<a href="../../domainlogic/docs/domain.html#domainlogic:actors:User" title="">Пользователь</a> использует ползунок этого элемента 
+			управления для того, чтобы выбирать искомый год.
+			Для этого он перетаскивает его вверх или вниз. При перетаскивании вниз, отображаемые года 
+			меняются от более поздних к более ранним. При перетаскивании вверх, наоборот.
+			результат изменений отображается на цифровом табло 'TimeMachine'. Система обеспечивает 
+			переход между годами таким образом, что отображаются только года за которые есть документы
+			а базе данных.
+		
+		
+			Для перехода на выбранный год <a href="../../domainlogic/docs/domain.html#domainlogic:actors:User" title="">Пользователь</a>
+			нажимает кнопку со стрелкой или стопку фотографий над цифровым табло.
+			В результате нажатия лента с коллекциями документов 'прокручивается' до выбранного года.  
+		
+	</p><h4 id="domainlogic:UseDocsFeed">Просматривает ленту документов</h4><p><small>URN: domainlogic:UseDocsFeed</small></p><p style="font-size:90%;padding-left:20px;">
+		
+			<a href="../../domainlogic/docs/domain.html#domainlogic:actors:User" title="">Пользователь</a> просматривает ленту с коллекциями 
+			документов за выбранный год.
+			На ленте представлены коллекции документов, каждый документ представлен в виде preview картинки.
+		
+		
+			Документы связанные с классами
+			Документы связанные с преподавателями
+			Документы связанные с мероприятиями
+			Неопознанные документы
+		
+		
+			В случае, если лента не помещается в экран по высоте, то 
+			<a href="../../domainlogic/docs/domain.html#domainlogic:actors:User" title="">Пользователь</a> прокручивает ее 
+			вниз стандартным для броузера способом.
+			При этом элемент управления 'TimeMachine' скрывается за пределы экрана, а шкала времени, 
+			расположенная справа от коллекции документов, остается в неизменном положении.
+		
+		
+			При нажатии на документ <a href="../../domainlogic/docs/domain.html#domainlogic:actors:User" title="">Пользователь</a> 
+			переходит к ознакомлению с информацией по этому документу.
+		
+	</p><h4 id="domainlogic:LookAtDocument">Просматривает информацию по конкретному документу</h4><p><small>URN: domainlogic:LookAtDocument</small></p><p style="font-size:90%;padding-left:20px;">
+		
+			<a href="../../domainlogic/docs/domain.html#domainlogic:actors:User" title="">Пользователь</a> выбирает документ для просмотра
+			и переходит на страницу информации о документе. Страница предоставляет возможность
+			изучить увеличенное изображение документа, его лицевую и оборотную сторону.
+			Кроме этого документ сопровождает текстовая информация.
+		
+		
+			Находясь на этой странице <a href="../../domainlogic/docs/domain.html#domainlogic:actors:User" title="">Пользователь</a>
+			может вернуться обратно в ленту, или воспользоваться переходом на другие документы
+			выбранного года.
+		
+	</p></body></html>
