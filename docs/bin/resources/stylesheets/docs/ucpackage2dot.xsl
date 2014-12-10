@@ -43,25 +43,7 @@
 				"<xsl:value-of select="translate(@URN,':','_')" />"
 				<xsl:text> [label="",shapefile="bin/resources/web/stickman.svg",peripheries=0];</xsl:text>
 			</xsl:for-each>
-		<!--
-			node [shape=record,style="bold",height=.5,color=grey,fontname=Tahoma];
-			{
-			rank=same;
-			<xsl:for-each select="$UCPACKAGE/uc:actor">
-				<xsl:value-of select="translate(@URN,':','_')" />
-				<xsl:text> [label="</xsl:text>
-				<xsl:call-template name="split-spaces">
-					<xsl:with-param name="str" select="@xlink:title" />
-					<xsl:with-param name="splitter" select="' '" />
-				</xsl:call-template>
-				<xsl:text> | &#171;actor&#187;", tooltip="</xsl:text>
-				<xsl:value-of select="@URN" />
-				<xsl:text>",URL="</xsl:text>
-				<xsl:value-of select="@xlink:href" />
-				<xsl:text>"];</xsl:text>
-			</xsl:for-each>
-			}
-		-->	
+			
 			subgraph cluster_package {
 				style="dashed,bold";
 				node [shape=ellipse,style="bold",height=.5,color=grey,fontname=Tahoma,fontsize=12];
