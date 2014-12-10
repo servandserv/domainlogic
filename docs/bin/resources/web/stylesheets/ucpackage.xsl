@@ -24,6 +24,8 @@
 	
 	<xsl:include href="header.xsl" />
 	
+	<xsl:variable name="stickman" select="document('bin/resources/web/stickman.svg',/)/svg:svg" />
+	
 	<xsl:template match="uc:ucpackages">
 		<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ru">
 			<head>
@@ -167,6 +169,14 @@
 			</xsl:for-each>
 			<xsl:apply-templates select="node()" />
 		</xsl:element>
+	</xsl:template>
+	
+	<xsl:template match="svg:image[@xlink:href]">
+		<xsl:element name="g" namespace="http://www.w3.org/2000/svg">
+			<xsl:attribute name="transform">translate(20,-140) scale(0.15)</xsl:attribute>
+			<xsl:copy-of select="$stickman/svg:g/child::*" />
+		</xsl:element>
+		<!--xsl:copy-of select="." /-->
 	</xsl:template>
 	
 	<xsl:template match="svg:svg">

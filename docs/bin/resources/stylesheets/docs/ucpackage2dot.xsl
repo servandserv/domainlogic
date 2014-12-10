@@ -16,15 +16,6 @@
 	<xsl:param name="NS" />
 	
 	<!-- глобальные переменные сделаем UPPERCASE  чтобы отличать их в коде  -->
-	<!--xsl:variable name="ROOT" select="/" />
-	<xsl:variable name="UCPACKAGE-ID" select="/uc:ucpackage/@ID" />
-	<xsl:variable name="UCPACKAGE-TITLE" select="/uc:ucpackage/@xlink:title" /-->
-	<!-- путь от файла пакета до корня проекта  -->
-	<!--xsl:variable name="PROJECT-BASE">
-		<xsl:call-template name="get-base">
-			<xsl:with-param name="path" select="$UCPACKAGE-ID"/>
-		</xsl:call-template>
-	</xsl:variable-->
 	
 	<xsl:variable name="UCPACKAGES-SET" select="document('ucpackage.xml',/)" />
 	<!--  текущий пакет сценариев -->
@@ -36,22 +27,27 @@
 	<!-- dot -->
 	<xsl:template match="uc:ucpackage">
 		digraph usecase_<xsl:value-of select="translate($NS,':','_')" /> {
-			labelloc=t;
-			rankdir=LR;
-			fontsize=14;
-			fontcolor="#0000cc";
-			compound=true;
-			
+		
+			<xsl:for-each select="$UCPACKAGE/uc:actor">
+				<xsl:text>subgraph cluster</xsl:text>
+				<xsl:value-of select="translate(@URN,':','_')" />
+				<xsl:text> {label="</xsl:text>
+				<xsl:call-template name="split-spaces">
+					<xsl:with-param name="str" select="@xlink:title" />
+					<xsl:with-param name="splitter" select="' '" />
+				</xsl:call-template>
+				<xsl:text>"; labelloc="b"; peripheries=0;margin=0;</xsl:text>
+				<xsl:value-of select="translate(@URN,':','_')" />
+				<xsl:text>};
+				</xsl:text>
+				"<xsl:value-of select="translate(@URN,':','_')" />"
+				<xsl:text> [label="",shapefile="bin/resources/web/stickman.svg",peripheries=0];</xsl:text>
+			</xsl:for-each>
+		<!--
 			node [shape=record,style="bold",height=.5,color=grey,fontname=Tahoma];
 			{
 			rank=same;
 			<xsl:for-each select="$UCPACKAGE/uc:actor">
-				<!--xsl:variable name="urn">
-					<xsl:call-template name="get-urn">
-						<xsl:with-param name="id" select="@xlink:label" />
-						<xsl:with-param name="node" select="." />
-					</xsl:call-template>
-				</xsl:variable-->
 				<xsl:value-of select="translate(@URN,':','_')" />
 				<xsl:text> [label="</xsl:text>
 				<xsl:call-template name="split-spaces">
@@ -65,18 +61,17 @@
 				<xsl:text>"];</xsl:text>
 			</xsl:for-each>
 			}
-			
+		-->	
 			subgraph cluster_package {
 				style="dashed,bold";
-				node [shape=ellipse,style="bold",height=.5,fontname=Tahoma];
-				
+				node [shape=ellipse,style="bold",height=.5,color=grey,fontname=Tahoma,fontsize=12];
 				<xsl:for-each select="$UCPACKAGE/uc:usecase">
 					<xsl:apply-templates select="." mode="node" />
 				</xsl:for-each>
-			
 			}
 			
 			// use
+			edge [fontname=Tahoma,fontsize=10];
 			edge [arrowhead="none",fillcolor=grey];
 			<xsl:for-each select="uc:use">
 				<xsl:variable name="tail_urn">
@@ -101,17 +96,25 @@
 			// proceed
 			node [shape=ellipse,style="bold,filled",height=.5,fillcolor=yellow,color=grey];
 			edge [arrowhead="vee",style="dashed",label="&#171;proceed&#187;",fillcolor=grey];
-			
 			<xsl:for-each select="uc:proceed">
 				<xsl:apply-templates select="." mode="edge" />
 			</xsl:for-each>
-			
 			// invoke
 			edge [arrowhead="vee",style="dotted",label="&#171;invoke&#187;",fillcolor=grey];
 			<xsl:for-each select="uc:invoke">
 				<xsl:apply-templates select="." mode="edge" />
 			</xsl:for-each>
-
+			// extend
+			edge [arrowhead="vee",style="dotted",label="&#171;extend&#187;",fillcolor=grey];
+			<xsl:for-each select="uc:extend">
+				<xsl:apply-templates select="." mode="edge" />
+			</xsl:for-each>
+			
+			labelloc=t;
+			rankdir=LR;
+			fontsize=12;
+			fontcolor=grey;
+			compound=true;
 		}
 	</xsl:template>
 
