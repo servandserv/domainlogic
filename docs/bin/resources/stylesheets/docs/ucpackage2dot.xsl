@@ -36,12 +36,12 @@
 					<xsl:with-param name="str" select="@xlink:title" />
 					<xsl:with-param name="splitter" select="' '" />
 				</xsl:call-template>
-				<xsl:text>"; labelloc="b"; peripheries=0;margin=0;</xsl:text>
+				<xsl:text>";labelloc="b";peripheries=0;margin=0;pad=0;fontname=Tahoma;fontsize=10;</xsl:text>
 				<xsl:value-of select="translate(@URN,':','_')" />
 				<xsl:text>};
 				</xsl:text>
 				"<xsl:value-of select="translate(@URN,':','_')" />"
-				<xsl:text> [label="",shapefile="bin/resources/web/stickman.svg",peripheries=0];</xsl:text>
+				<xsl:text> [label="",shapefile="bin/resources/web/stickman.svg",peripheries=0,margin=0];</xsl:text>
 			</xsl:for-each>
 			
 			subgraph cluster_package {

@@ -173,7 +173,15 @@
 	
 	<xsl:template match="svg:image[@xlink:href]">
 		<xsl:element name="g" namespace="http://www.w3.org/2000/svg">
-			<xsl:attribute name="transform">translate(20,-140) scale(0.15)</xsl:attribute>
+			<!--xsl:attribute name="x"><xsl:value-of select="@x" /></xsl:attribute>
+			<xsl:attribute name="y"><xsl:value-of select="@y" /></xsl:attribute>
+			<xsl:attribute name="width"><xsl:value-of select="@width" /></xsl:attribute>
+			<xsl:attribute name="height"><xsl:value-of select="@height" /></xsl:attribute-->
+			<xsl:attribute name="transform">
+				<xsl:text>translate(</xsl:text>
+				<xsl:value-of select="@x" />,<xsl:value-of select="@y" />
+				<xsl:text>) scale(0.15)</xsl:text>
+			</xsl:attribute>
 			<xsl:copy-of select="$stickman/svg:g/child::*" />
 		</xsl:element>
 		<!--xsl:copy-of select="." /-->

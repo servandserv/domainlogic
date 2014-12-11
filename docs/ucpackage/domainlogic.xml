@@ -8,6 +8,7 @@
 	xlink:title="История школы" xlink:type="extended">
 	
 	<actor xlink:label="User" xlink:href="domainlogic:actors:User" xlink:title="Пользователь" />
+	<actor xlink:label="AutorizedUser" xlink:href="domainlogic:actors:AutorizedUser" xlink:title="Авторизованый пользователь" />
 	
 	<use xlink:from="#User" xlink:to="#In"/>
 	<usecase xlink:label="In" xlink:title="Заходит на сайт">
