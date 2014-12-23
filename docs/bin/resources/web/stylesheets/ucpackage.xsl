@@ -221,7 +221,7 @@
 			<xsl:for-each select="@*">
 				<xsl:attribute name="{local-name()}"><xsl:value-of select="."/></xsl:attribute>
 			</xsl:for-each>
-			<xsl:attribute name="fill">blue</xsl:attribute>
+			<xsl:attribute name="fill">#005A9C</xsl:attribute>
 			<xsl:attribute name="style">text-decoration:underline;</xsl:attribute>
 			<xsl:apply-templates select="node()" />
 		</xsl:element>

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <style type="text/css" xmlns="http://www.w3.org/1999/xhtml">
     body {
-		padding: 2em 1em 2em 70px;margin: 0;font-family: sans-serif;color: black;background: white;
+		padding: 2em 1em 2em 70px;margin: 0;font-family:Tahoma;color: black;background: white;
 	}
-	:link { color: #00C; background: transparent }
+	:link { color: #005A9C; background: transparent }
 	:visited { color: #609; background: transparent }
-	a:active { color: #C00; background: transparent }
+	a:active { color: #005A9C; background: transparent }
 	a:link img, a:visited img { border-style: none }
 
 	h1, h2, h3, h4, h5, h6 { text-align: left }

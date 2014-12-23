@@ -228,7 +228,7 @@
 				</xsl:if>
 			</xsl:for-each>
 			<xsl:if test="$ENTITIES[@URN=$urn]">
-				<xsl:attribute name="fill">blue</xsl:attribute>
+				<xsl:attribute name="fill">#005A9C</xsl:attribute>
 			</xsl:if>
 			<xsl:variable name="title">
 				<xsl:choose>
