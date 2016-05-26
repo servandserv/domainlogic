@@ -21,12 +21,13 @@
         omit-xml-declaration="no" />
 	
 	<xsl:param name="NS" select="'ns'" />
+	<xsl:param name="BASE" />
 	
 	<!-- глобальные переменные сделаем UPPERCASE  чтобы отличать их в коде  -->
-	<xsl:variable name="ROOT" select="/" />
-	<xsl:variable name="DOMAIN-ID" select="/d:domain/@ID" />
-	<xsl:variable name="DOMAIN-TITLE" select="/d:domain/@xlink:title" />
-	<xsl:variable name="DOMAIN-HREF" select="/d:domain/@xlink:href" />
+	<xsl:variable name="ROOT" select="/d:domains" />
+	<xsl:variable name="DOMAIN-ID" select="/d:domains/@ID" />
+	<xsl:variable name="DOMAIN-TITLE" select="/d:domains/@xlink:title" />
+	<xsl:variable name="DOMAIN-HREF" select="/d:domains/@xlink:href" />
 	<!-- путь от файла пакета до корня проекта  -->
 	<!--xsl:variable name="PROJECT-BASE">
 		<xsl:call-template name="get-base">
@@ -37,19 +38,19 @@
 	<!-- контейнер для терминов проекта, собираем все термины проекта в контейнер -->
 	<xsl:variable name="DOMAINS">
 		<!-- достаем корневой  пакет  domain и начиная с него собираем все термины проекта  -->
-		<xsl:variable name="domains" select="document('temp.xml', /)/d:domains"></xsl:variable>
+		<!--xsl:variable name="domains" select="document('temp.xml', /)/d:domains"></xsl:variable-->
 		<xsl:element name="d:domains">
 			<xsl:attribute name="xlink:title" namespace="http://www.w3.org/1999/xlink">
-				<xsl:value-of select="$domains/@xlink:title"/>
+				<xsl:value-of select="$DOMAIN-TITLE"/>
 			</xsl:attribute>
-			<!--xsl:attribute name="ID">
-				<xsl:value-of select="$domain/@ID"/>
-			</xsl:attribute-->
+			<xsl:attribute name="ID">
+				<xsl:value-of select="$DOMAIN-ID" />
+			</xsl:attribute>
 			<!--xsl:apply-templates select="$domain/d:*" mode="include-entity">
 				<xsl:with-param name="package" select="$domain/@ID" />
 				<xsl:with-param name="package-path" select="concat($PROJECT-BASE,domain.xml)" />
 			</xsl:apply-templates-->
-			<xsl:apply-templates select="$domains/d:domain[@xlink:type='locator']" mode="include-domains">
+			<xsl:apply-templates select="$ROOT/d:domain[@xlink:type='locator']" mode="include-domains">
 				<xsl:with-param name="parent-package" select="''" />
 			</xsl:apply-templates>
 		</xsl:element>
@@ -58,23 +59,21 @@
 	<xsl:template match="d:domain" mode="include-domains">
 		<xsl:param name="parent-package" />
 		<xsl:variable name="package-path" select="@xlink:href" />
-		<xsl:variable name="included" select="document($package-path,/)/d:domain"></xsl:variable>
 		<xsl:variable name="package">
 			<xsl:apply-templates select="." mode="package">
 				<xsl:with-param name="parent-package" select="$parent-package" />
 			</xsl:apply-templates>
 		</xsl:variable>
+		<xsl:variable name="included" select="document(concat($BASE,'/',$package-path))/d:domain"></xsl:variable>
 		<xsl:element name="d:domain">
 			<xsl:attribute name="xlink:title" namespace="http://www.w3.org/1999/xlink">
 				<xsl:value-of select="$included/@xlink:title"/>
 			</xsl:attribute>
 			<xsl:attribute name="URN">
 				<xsl:value-of select="$package" />
-				<!--xsl:value-of select="$included/@ID"/-->
 			</xsl:attribute>
 			<xsl:apply-templates select="$included/d:entity" mode="include-entity">
 				<xsl:with-param name="package" select="$package" />
-				<!--xsl:with-param name="package-path" select="$package-path" /-->
 			</xsl:apply-templates>
 			<xsl:apply-templates select="$included/d:domain[@xlink:type='locator']" mode="include-domains">
 				<xsl:with-param name="parent-package" select="$package" />
@@ -84,7 +83,6 @@
 	
 	<xsl:template match="d:entity" mode="include-entity">
 		<xsl:param name="package" />
-		<!--xsl:param name="package-path" /-->
 		<xsl:element name="d:entity">
 			<xsl:attribute name="ID"><xsl:value-of select="@ID"/></xsl:attribute>
 			<xsl:if test="@isValueObject">
@@ -100,11 +98,6 @@
 					<xsl:with-param name="urn" select="concat($package,':',@ID)" />
 				</xsl:call-template>
 			</xsl:attribute>
-			<!--xsl:attribute name="package-path">
-				<xsl:value-of select="$PROJECT-BASE" />
-				<xsl:value-of select="$package-path"/>
-			</xsl:attribute-->
-			<!--xsl:copy-of select="d:*" /-->
 			<xsl:apply-templates mode="include-entity-info">
 				<xsl:with-param name="package" select="$package" />
 			</xsl:apply-templates>
@@ -200,9 +193,9 @@
 	
 	<xsl:template name="url">
 		<xsl:param name="urn" />
-		<xsl:text>../../</xsl:text>
-		<xsl:value-of select="substring-before($urn,':')" />
-		<xsl:text>/docs/domain.html#</xsl:text>
+		<!--xsl:text>../../</xsl:text>
+		<xsl:value-of select="substring-before($urn,':')" /-->
+		<xsl:text>domain.html#</xsl:text>
 		<xsl:value-of select="$urn" />
 	</xsl:template>
 	
@@ -212,7 +205,14 @@
 			<xsl:value-of select="$parent-package" />
 			<xsl:text>:</xsl:text>
 		</xsl:if>
-		<xsl:value-of select="substring-before(substring-after(@xlink:href,'/'),'.')" />
+		<xsl:choose>
+		    <xsl:when test="substring-after(@xlink:href,'/')">
+		        <xsl:value-of select="substring-before(substring-after(@xlink:href,'/'),'.')" />
+		    </xsl:when>
+		    <xsl:otherwise>
+		        <xsl:value-of select="substring-before(@xlink:href,'.')" />
+		    </xsl:otherwise>
+		</xsl:choose>
 	</xsl:template>
 	
 	<xsl:template name="get-base">

@@ -23,31 +23,26 @@
         omit-xml-declaration="no" />
 	
 	<xsl:param name="NS" select="'ns'" />
+	<xsl:param name="BASE" />
 	
 	<!-- глобальные переменные сделаем UPPERCASE  чтобы отличать их в коде  -->
-	<xsl:variable name="ROOT" select="/" />
+	<xsl:variable name="ROOT" select="/uc:ucpackage" />
 	<xsl:variable name="UCPACKAGE-ID" select="/uc:ucpackage/@ID" />
 	<xsl:variable name="UCPACKAGE-TITLE" select="/uc:ucpackage/@xlink:title" />
 	<xsl:variable name="UCPACKAGE-HREF" select="/uc:ucpackage/@xlink:href" />
-	<!-- путь от файла пакета до корня проекта  -->
-	<!--xsl:variable name="PROJECT-BASE">
-		<xsl:call-template name="get-base">
-			<xsl:with-param name="path" select="$UCPACKAGE-ID"/>
-		</xsl:call-template>
-	</xsl:variable-->
 	
 	<!-- контейнер для терминов проекта, собираем все термины проекта в контейнер -->
 	<xsl:variable name="UCPACKAGES">
 		<!-- достаем корневой  пакет  glossary и начиная с него собираем все термины проекта  -->
-		<xsl:variable name="ucpackage" select="document('temp.xml', /)/uc:ucpackage"></xsl:variable>
+		<!--xsl:variable name="ucpackage" select="document('temp.xml', /)/uc:ucpackage"></xsl:variable-->
 		<xsl:element name="uc:ucpackages">
 			<xsl:attribute name="xlink:title" namespace="http://www.w3.org/1999/xlink">
-				<xsl:value-of select="$ucpackage/@xlink:title"/>
+				<xsl:value-of select="$UCPACKAGE-TITLE"/>
 			</xsl:attribute>
-			<!--xsl:attribute name="URN">
-				<xsl:value-of select="$ucpackage/@ID"/>
-			</xsl:attribute-->
-			<xsl:apply-templates select="$ucpackage/uc:ucpackage[@xlink:type='locator']" mode="include" >
+			<xsl:attribute name="ID">
+				<xsl:value-of select="$UCPACKAGE-ID"/>
+			</xsl:attribute>
+			<xsl:apply-templates select="$ROOT/uc:ucpackage[@xlink:type='locator']" mode="include">
 				<xsl:with-param name="parent-package" select="''" />
 			</xsl:apply-templates>
 		</xsl:element>
@@ -56,7 +51,7 @@
 	<xsl:template match="uc:ucpackage" mode="include">
 		<xsl:param name="parent-package" />
 		<xsl:variable name="ucpackage-path" select="@xlink:href" />
-		<xsl:variable name="included" select="document($ucpackage-path,/)/uc:ucpackage" />
+		<xsl:variable name="included" select="document(concat($BASE,'/',$ucpackage-path))/uc:ucpackage" />
 		<xsl:variable name="package">
 			<xsl:apply-templates select="." mode="package">
 				<xsl:with-param name="parent-package" select="$parent-package" />
@@ -211,9 +206,9 @@
 	<xsl:template name="url">
 		<xsl:param name="urn" />
 		<xsl:param name="type" />
-		<xsl:text>../../</xsl:text>
+		<!--xsl:text>../../</xsl:text>
 		<xsl:value-of select="substring-before($urn,':')" />
-		<xsl:text>/docs/</xsl:text>
+		<xsl:text>/docs/</xsl:text-->
 		<xsl:value-of select="$type" />
 		<xsl:text>.html#</xsl:text>
 		<xsl:value-of select="$urn" />
@@ -225,7 +220,14 @@
 			<xsl:value-of select="$parent-package" />
 			<xsl:text>:</xsl:text>
 		</xsl:if>
-		<xsl:value-of select="substring-before(substring-after(@xlink:href,'/'),'.')" />
+		<xsl:choose>
+		    <xsl:when test="substring-after(@xlink:href,'/')">
+		        <xsl:value-of select="substring-before(substring-after(@xlink:href,'/'),'.')" />
+		    </xsl:when>
+		    <xsl:otherwise>
+		        <xsl:value-of select="substring-before(@xlink:href,'.')" />
+		    </xsl:otherwise>
+		</xsl:choose>
 	</xsl:template>
 	
 </xsl:stylesheet>

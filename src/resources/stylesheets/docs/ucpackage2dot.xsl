@@ -14,6 +14,7 @@
 	
 	<!-- пространство имен домена  -->
 	<xsl:param name="NS" />
+	<xsl:param name="BASE" />
 	
 	<!-- глобальные переменные сделаем UPPERCASE  чтобы отличать их в коде  -->
 	
@@ -41,7 +42,7 @@
 				<xsl:text>};
 				</xsl:text>
 				"<xsl:value-of select="translate(@URN,':','_')" />"
-				<xsl:text> [label="",shapefile="bin/resources/web/stickman.svg",peripheries=0,margin=0];</xsl:text>
+				<xsl:text> [label="",shapefile="</xsl:text><xsl:value-of select="$BASE" /><xsl:text>/resources/web/stickman.svg",peripheries=0,margin=0];</xsl:text>
 			</xsl:for-each>
 			
 			subgraph cluster_package {

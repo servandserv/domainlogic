@@ -85,7 +85,7 @@
 		</xsl:element>
 		<xsl:element name="h{$level + 2}" namespace="http://www.w3.org/1999/xhtml">Диаграмма предметной области</xsl:element>
 		<p>
-			<xsl:variable name="domain-addr" select="concat('tmp/images/',translate(@URN,':','/'),'/domain.svg')" />
+			<xsl:variable name="domain-addr" select="concat('images/',translate(@URN,':','/'),'/domain.svg')" />
 			<xsl:variable 
 				name="domain" 
 				select="document($domain-addr,/)/svg:svg" />

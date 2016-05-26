@@ -22,9 +22,11 @@
 		omit-xml-declaration="yes"
 		doctype-system="about:legacy-compat" />
 	
+	<xsl:param name="BASE" />
+	
 	<xsl:include href="header.xsl" />
 	
-	<xsl:variable name="stickman" select="document('bin/resources/web/stickman.svg',/)/svg:svg" />
+	<xsl:variable name="stickman" select="document(concat($BASE,'/resources/web/stickman.svg'))/svg:svg" />
 	
 	<xsl:template match="uc:ucpackages">
 		<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ru">
@@ -90,7 +92,7 @@
 		</xsl:element>
 		<xsl:variable 
 				name="graph" 
-				select="document(concat('tmp/images/',translate(@URN,':','/'),'/ucpackage.svg'),/)/svg:svg" />
+				select="document(concat('images/',translate(@URN,':','/'),'/ucpackage.svg'),/)/svg:svg" />
 		<xsl:apply-templates select="$graph" />
 		<xsl:if test="uc:actor">
 			<xsl:element name="h{$level + 2}" namespace="http://www.w3.org/1999/xhtml">
