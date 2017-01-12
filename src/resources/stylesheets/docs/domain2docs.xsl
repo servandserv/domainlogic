@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="1.0" 
-	xmlns="urn:docs:domain"
-	xmlns:d="urn:docs:domain"
+	xmlns="urn:com:servandserv:docs:domain"
+	xmlns:d="urn:com:servandserv:docs:domain"
 	xmlns:html="http://www.w3.org/1999/xhtml"
 	xmlns:xlink="http://www.w3.org/1999/xlink"
-	xmlns:toc="urn:docs:toc"
+	xmlns:toc="urn:com:servandserv:docs:toc"
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 	xmlns:exsl="http://exslt.org/common"
 	xmlns:svg="http://www.w3.org/2000/svg"

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="1.0" 
-	xmlns="urn:docs:ucpackage"
-	xmlns:uc="urn:docs:ucpackage"
-	xmlns:d="urn:docs:domain"
+	xmlns="urn:com:servandserv:docs:ucpackage"
+	xmlns:uc="urn:com:servandserv:docs:ucpackage"
+	xmlns:d="urn:com:servandserv:docs:domain"
 	xmlns:html="http://www.w3.org/1999/xhtml"
 	xmlns:xlink="http://www.w3.org/1999/xlink"
-	xmlns:toc="urn:docs:toc"
+	xmlns:toc="urn:com:servandserv:docs:toc"
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 	xmlns:exsl="http://exslt.org/common"
 	xmlns:svg="http://www.w3.org/2000/svg"
@@ -161,8 +161,8 @@
 		</xsl:variable>
 		<xsl:variable name="type">
 			<xsl:choose>
-				<xsl:when test="namespace-uri() = 'urn:docs:domain'">domain</xsl:when>
-				<xsl:when test="namespace-uri() = 'urn:docs:ucpackage'">ucpackage</xsl:when>
+				<xsl:when test="namespace-uri() = 'urn:com:servandserv:docs:domain'">domain</xsl:when>
+				<xsl:when test="namespace-uri() = 'urn:com:servandserv:docs:ucpackage'">ucpackage</xsl:when>
 			</xsl:choose>
 		</xsl:variable>
 		<xsl:variable name="url">

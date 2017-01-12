@@ -1,6 +1,10 @@
 #!/bin/sh
 set -e
 
+realp() {
+    echo `perl -e 'use Cwd "abs_path";print abs_path(shift)' $1`
+}
+
 usage() { printf "
 Usage: @build name source destination
 
@@ -26,11 +30,11 @@ if [ -z "$3" ]; then
 fi
 
 invokePath=$(pwd)
-dlPath=$(dirname $(realpath $0))
+dlPath=$(dirname $(realp $0))
 #projectPath=$(dirname $(dirname $(realpath $0)))
 #tmpBuildDir=${projectPath}"/tmp"
-sourcePath=$(realpath "${invokePath}/${2}")
-docsPath=$(realpath "${invokePath}/${3}")
+sourcePath=$(realp "${invokePath}/${2}")
+docsPath=$(realp "${invokePath}/${3}")
 tmpBuildPath="${dlPath}/tmp"
 
 domain2Docs="${dlPath}/resources/stylesheets/docs/domain2docs.xsl";
@@ -47,7 +51,7 @@ trap 'rm -rf -- ${tmpBuildPath}' EXIT
 cd "${sourcePath}/domain"
 # все глоссарии проекта
 echo "..... build domain"
-echo "<?xml version='1.0' encoding='utf-8'?><d:domains ID='${1}' xlink:title='Модель предметной области' xmlns:d='urn:docs:domain' xmlns:xlink='http://www.w3.org/1999/xlink'>" > ${tmpBuildPath}/temp.xml
+echo "<?xml version='1.0' encoding='utf-8'?><d:domains ID='${1}' xlink:title='Модель предметной области' xmlns:d='urn:com:servandserv:docs:domain' xmlns:xlink='http://www.w3.org/1999/xlink'>" > ${tmpBuildPath}/temp.xml
 #find domain -type f | while read j; do
 for j in *.xml; do
 	echo "<d:domain xlink:type='locator' xlink:href='${j}' />" >> ${tmpBuildPath}/temp.xml
@@ -81,7 +85,7 @@ done
 cd "${sourcePath}/ucpackage"
 # все пакеты сценариев проекта
 echo "..... build usecases"
-echo "<?xml version='1.0' encoding='utf-8'?><ucpackage ID='${1}' xlink:title='Прецеденты использования' xmlns:d='urn:docs:domain' xmlns='urn:docs:ucpackage' xmlns:xlink='http://www.w3.org/1999/xlink'>" > ${tmpBuildPath}/temp.xml
+echo "<?xml version='1.0' encoding='utf-8'?><ucpackage ID='${1}' xlink:title='Прецеденты использования' xmlns:d='urn:com:servandserv:docs:domain' xmlns='urn:com:servandserv:docs:ucpackage' xmlns:xlink='http://www.w3.org/1999/xlink'>" > ${tmpBuildPath}/temp.xml
 #find ucpackage -type f | while read j; do
 #find . -maxdepth 1 -type f | while read j; do
 for j in *.xml; do

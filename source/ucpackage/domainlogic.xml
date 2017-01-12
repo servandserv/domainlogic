@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ucpackage 
-	xmlns="urn:docs:ucpackage"
-	xmlns:ui="urn:docs:interface"
-	xmlns:d="urn:docs:domain"
+	xmlns="urn:com:servandserv:docs:ucpackage"
+	xmlns:ui="urn:com:servandserv:docs:interface"
+	xmlns:d="urn:com:servandserv:docs:domain"
 	xmlns:xlink="http://www.w3.org/1999/xlink"
 	xmlns:html="http://www.w3.org/1999/xhtml"
 	xlink:title="История школы" xlink:type="extended">
