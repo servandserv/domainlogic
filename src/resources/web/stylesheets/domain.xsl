@@ -83,6 +83,7 @@
 			</xsl:attribute>
 			<xsl:value-of select="@xlink:title" />
 		</xsl:element>
+		<xsl:apply-templates select="html:*" />
 		<xsl:element name="h{$level + 2}" namespace="http://www.w3.org/1999/xhtml">Диаграмма предметной области</xsl:element>
 		<p>
 			<xsl:variable name="domain-addr" select="concat('images/',translate(@URN,':','/'),'/domain.svg')" />

@@ -72,6 +72,7 @@
 			<xsl:attribute name="URN">
 				<xsl:value-of select="$package" />
 			</xsl:attribute>
+			<xsl:copy-of select="$included/html:*" />
 			<xsl:apply-templates select="$included/d:entity" mode="include-entity">
 				<xsl:with-param name="package" select="$package" />
 			</xsl:apply-templates>
@@ -136,6 +137,13 @@
 	<xsl:template match="d:*" mode="include-entity-info">
 		<xsl:param name="package" />
 		<xsl:element name="d:{local-name()}">
+		    <xsl:if test="@xlink:href">
+		        <xsl:attribute name="xlink:href">
+				    <xsl:apply-templates select="." mode="url">
+					    <xsl:with-param name="package" select="$package" />
+				    </xsl:apply-templates>
+			    </xsl:attribute>
+			</xsl:if>
 			<xsl:apply-templates mode="include-entity-info" >
 				<xsl:with-param name="package" select="$package" />
 			</xsl:apply-templates>
