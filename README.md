@@ -1,15 +1,13 @@
 domainlogic
 ===========
 
-Работа с документацией
+Project documentation
 
-Usage: src/@build name source destination
+Usage: src/build.sh conf
 
   params:
-    name - project name 
-    source - path to documentation source
-    destination - path to docs files destination
+    conf - ini file 
 
   example:
 
-    src/@build domainlogic ../source ../docs
+    src/build.sh domainlogic.ini

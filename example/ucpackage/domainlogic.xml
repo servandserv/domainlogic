@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ucpackage 
+    ID="domainlogic"
+	xmlns="urn:com:servandserv:domainlogic:ucpackage"
+	xmlns:ui="urn:com:servandserv:domainlogic:interface"
+	xmlns:d="urn:com:servandserv:domainlogic:domain"
+	xmlns:xlink="http://www.w3.org/1999/xlink"
+	xmlns:html="http://www.w3.org/1999/xhtml"
+	xlink:title="История школы" xlink:type="extended">
+	
+	<actor xlink:label="User" xlink:href="domain:domainlogic:actors:User" xlink:title="Пользователь" />
+	<actor xlink:label="AutorizedUser" xlink:href="domain:domainlogic:actors:AutorizedUser" xlink:title="Авторизованый пользователь" />
+	
+	<use xlink:from="#User" xlink:to="#In"/>
+	<usecase xlink:label="In" xlink:title="Заходит на сайт">
+		<html:p>
+			<d:ent xlink:href="domain:domainlogic:actors:User">Пользователь</d:ent> 
+			переходит по ссылке <ui:link>http://www.....</ui:link> и попадает на головную 
+			<ui:page>страницу</ui:page> сайта. Головная страница сайта предоставляет интерфейсы для 
+			навигации по сайту, поисковую строку, 'машину времени'(интерфейс которой состоит из элемента управления
+			и ленты с <d:ent xlink:href="domain:domainlogic:school:Documents">коллекциями документов</d:ent>).
+		</html:p>
+	</usecase>
+	
+	<usecase xlink:label="UseTimeMachine" xlink:title="Использует 'машину времени'">
+		<html:p>
+			Находясь на главной странице сайта, <d:ent xlink:href="domain:domainlogic:actors:User">Пользователь</d:ent>
+			осуществляет навигацию по коллекциям документов за разные периоды времени.
+			Для того, чтобы это сделать он использует элемент управления 'TimeMachine'.
+		</html:p>
+		<html:p>
+			<d:ent xlink:href="domain:domainlogic:actors:User">Пользователь</d:ent> использует ползунок этого элемента 
+			управления для того, чтобы выбирать искомый год.
+			Для этого он перетаскивает его вверх или вниз. При перетаскивании вниз, отображаемые года 
+			меняются от более поздних к более ранним. При перетаскивании вверх, наоборот.
+			результат изменений отображается на цифровом табло 'TimeMachine'. Система обеспечивает 
+			переход между годами таким образом, что отображаются только года за которые есть документы
+			а базе данных.
+		</html:p>
+		<html:p>
+			Для перехода на выбранный год <d:ent xlink:href="domain:domainlogic:actors:User">Пользователь</d:ent>
+			нажимает кнопку со стрелкой или стопку фотографий над цифровым табло.
+			В результате нажатия лента с коллекциями документов 'прокручивается' до выбранного года.  
+		</html:p>
+	</usecase>
+	
+	<usecase xlink:label="UseDocsFeed" xlink:title="Просматривает ленту документов">
+		<html:p>
+			<d:ent xlink:href="domain:domainlogic:actors:User">Пользователь</d:ent> просматривает ленту с коллекциями 
+			документов за выбранный год.
+			На ленте представлены коллекции документов, каждый документ представлен в виде preview картинки.
+		</html:p>
+		<html:ul>
+			<html:li>Документы связанные с классами</html:li>
+			<html:li>Документы связанные с преподавателями</html:li>
+			<html:li>Документы связанные с мероприятиями</html:li>
+			<html:li>Неопознанные документы</html:li>
+		</html:ul>
+		<html:p>
+			В случае, если лента не помещается в экран по высоте, то 
+			<d:ent xlink:href="domain:domainlogic:actors:User">Пользователь</d:ent> прокручивает ее 
+			вниз стандартным для броузера способом.
+			При этом элемент управления 'TimeMachine' скрывается за пределы экрана, а шкала времени, 
+			расположенная справа от коллекции документов, остается в неизменном положении.
+		</html:p>
+		<html:p>
+			При нажатии на документ <d:ent xlink:href="domain:domainlogic:actors:User">Пользователь</d:ent> 
+			переходит к ознакомлению с информацией по этому документу.
+		</html:p>
+	</usecase>
+	
+	<usecase xlink:label="LookAtDocument" xlink:title="Просматривает информацию по конкретному документу">
+		<html:p>
+			<d:ent xlink:href="domain:domainlogic:actors:User">Пользователь</d:ent> выбирает документ для просмотра
+			и переходит на страницу информации о документе. Страница предоставляет возможность
+			изучить увеличенное изображение документа, его лицевую и оборотную сторону.
+			Кроме этого документ сопровождает текстовая информация.
+		</html:p>
+		<html:p>
+			Находясь на этой странице <d:ent xlink:href="domain:domainlogic:actors:User">Пользователь</d:ent>
+			может вернуться обратно в ленту, или воспользоваться переходом на другие документы
+			выбранного года.
+		</html:p>
+	</usecase>
+	
+	<!--script type='text/jumly+sequence'>
+        @found "Employee", ->
+            @loop ->
+                @note "Устанавливаем правила приоретизации состояния одних кейсов над другими"
+                @message "setRules", "Gandalf App", ->
+                    @note "Выстраиваем очереди к типам ресурсов"
+                    @message "buildQueue", "Gandalf App"
+                    @note "По определенному алгоритму генерируем задачи"
+                    @message "createVtodo", "ICAL App"
+                @loop ->
+                    @message "work with", "ICAL App", ->
+                        @note "Во время работы над задачей, вызываем рабочие формы приложения"
+                        @message "get", "Gandalf App", ->
+                            @note "Фиксируем какие-то изменения в задаче"
+                            @message "editVtodo", "ICAL App"
+                    @message "close", "ICAL App", ->
+                        @message "send Email", "Mail Service", ->
+                                @note "Use mail 2 webservice gateway"
+                                @message "Post mail", "Gandalf App", ->
+                                    @note "Вносим корректировки в очередь задач"
+                                    @message "rebuildQueue", "Gandalf App"
+    </script-->
+	
+	<proceed xlink:from="#In" xlink:to="#UseTimeMachine" />
+	<proceed xlink:from="#In" xlink:to="#UseDocsFeed" />
+	<proceed xlink:from="#UseDocsFeed" xlink:to="#LookAtDocument" />
+	
+</ucpackage>
