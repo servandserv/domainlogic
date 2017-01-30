@@ -14,7 +14,7 @@
 
     <xsd:complexType name="domainType">
         <xsd:sequence>
-            <xsd:any namespace="http://www.w3.org/1999/xhtml" minOccurs="0" />
+            <xsd:any namespace="http://www.w3.org/1999/xhtml" minOccurs="0" maxOccurs="unbounded" processContents="skip" />
             <xsd:element ref="entity" minOccurs="0" maxOccurs="unbounded" />
             <xsd:element name="domain" type="domainLinkType" minOccurs="0" maxOccurs="unbounded" />
         </xsd:sequence>
