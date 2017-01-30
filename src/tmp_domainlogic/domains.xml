@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<d:domain xmlns:d="urn:com:servandserv:domainlogic:domain" xmlns:xlink="http://www.w3.org/1999/xlink" ID="domain" base="/Users/kolpakov/vm/localhost/domainlogic/src/../example" xlink:title="Domain models" URN="domain">
+  <d:domain xlink:title="Тестовая документация" ID="domainlogic" URN="domain:domainlogic">
+    <d:domain xlink:title="Участники" ID="actors" URN="domain:domainlogic:actors">
+      <d:entity ID="User" PARENT-URN="domain:domainlogic:actors" URN="domain:domainlogic:actors:User" xlink:title="Пользователь">
+        <definition xmlns="urn:com:servandserv:domainlogic:domain" xmlns:html="http://www.w3.org/1999/xhtml">
+			<html:p>
+				Пользователь приложения. Любой посетитель сайта.
+			</html:p>
+		</definition>
+      </d:entity>
+      <d:entity ID="AuthorizedUser" PARENT-URN="domain:domainlogic:actors" URN="domain:domainlogic:actors:AuthorizedUser" xlink:title="Авторизованный пользователь">
+        <definition xmlns="urn:com:servandserv:domainlogic:domain" xmlns:html="http://www.w3.org/1999/xhtml">
+			<html:p>
+				<is-a xlink:href="#User">Пользователь</is-a> приложения зарегистрировавшийся на сайте любым из предложенных сайтом 
+				способов. Авторизованный пользователь <has-a xlink:href="#AutorizedUser:UUID">обладает уникальным идентификатором</has-a>
+				в пределах сайта.
+			</html:p>
+		</definition>
+      </d:entity>
+    </d:domain>
+    <d:domain xlink:title="История школы" ID="school" URN="domain:domainlogic:school">
+      <d:entity ID="Resource" PARENT-URN="domain:domainlogic:school" URN="domain:domainlogic:school:Resource" xlink:title="Ресурс">
+        <definition xmlns="urn:com:servandserv:domainlogic:domain" xmlns:html="http://www.w3.org/1999/xhtml">
+			<html:p>
+				Объект модели отличающийся от других объектов своим <has-a xlink:href="#Resource:URI">идентификатором</has-a>.
+			</html:p>
+		</definition>
+      </d:entity>
+      <d:entity ID="Union" PARENT-URN="domain:domainlogic:school" URN="domain:domainlogic:school:Union" xlink:title="Объединение">
+        <definition xmlns="urn:com:servandserv:domainlogic:domain" xmlns:html="http://www.w3.org/1999/xhtml">
+			<html:p>
+				<is-a xlink:href="#Resource">Ресурс</is-a> представляющий из себя объединение людей, 
+				ограниченное определенными рамками. Как минимум, имеет свои исторические
+				<has-many xlink:href="#HistoryName">наименования</has-many>,
+				<has-a xlink:href="#Union:UUID">идентификатор</has-a>,
+				<has-a xlink:href="#Union:dtOpen">дату создания</has-a> и
+				<has-a xlink:href="#Union:dtClose">дату роспуска</has-a>(которая может быть открытой). 
+				Объединение состоит из множества участников, которые присоединяются к
+				объединению на определенный срок и играют в нем определенную роль. Связь со множеством участников
+				определяется через <tl xlink:href="#TraversalRule">отношениями</tl>
+				Объединение может быть связано с другими объединениями различными типами связей(например "родитель-наследник").
+				Объединение создается с определенной <has-a xlink:href="#Union:mission">целью - миссией</has-a>,
+				которая отражает смысл его существования.
+			</html:p>
+		</definition>
+        <sample xmlns="urn:com:servandserv:domainlogic:domain" xmlns:html="http://www.w3.org/1999/xhtml">
+			Примером объединения является школьный класс, который именуется определенным образом, организуется с
+			какого-то момента и распускается в конце процесса обучения. Ученики класса являются его участниками
+			они начинают учиться в классе, каждый в свое время, и так же заканчивают учебу в нем. Участником
+			класса может быть классный руководитель, который тоже присоединяется к объединению на какой-то период.
+		</sample>
+      </d:entity>
+      <d:entity ID="School" PARENT-URN="domain:domainlogic:school" URN="domain:domainlogic:school:School" xlink:title="Школа">
+        <definition xmlns="urn:com:servandserv:domainlogic:domain" xmlns:html="http://www.w3.org/1999/xhtml">
+			<html:p>
+				Учебное заведение для получения общего образования. Является <is-a xlink:href="#Union">объединением</is-a>
+				людей объединенным общими целями и задачами, основными из которых являются
+				<has-a xlink:href="#Union:mission">обучение и воспитание детей</has-a>.
+				Образовательные учреждения, дающие общее среднее образование,
+				включают в себя общеобразовательные школы, лицеи и гимназии.
+			</html:p>
+			<html:p>
+				Школа формируется из классов объединенных в параллели. В разные периоды истории число параллелей в
+				общеобразовательных школах составляло от <has-many xlink:href="#Year">10 до 12 штук </has-many>.
+				Параллели составляют субобъединения в рамках школы.
+			</html:p>
+			<html:p>
+				Другим примером субобъединения в рамках школы является <has-a xlink:href="#Staff">школьный персонал,</has-a>
+				который объединяет всех учителей, административных и вспомогательных работников школы.
+			</html:p>
+			<html:p>
+				Кроме параллелей состоящих из классов и преподавательского состава можно выделить и другие виды
+				объединений существующих в школе, таких как, кружки, пионерские дружины, комсомольские организации
+				спортивные секции и т.п.
+			</html:p>
+		</definition>
+        <sample xmlns="urn:com:servandserv:domainlogic:domain" xmlns:html="http://www.w3.org/1999/xhtml">
+			Например, МБОУ «ИЕГЛ «Школа-30», была организована в сентябре 1934 года и действует по настоящее время.
+			за время своей работы сменила несколько наименований.
+		</sample>
+      </d:entity>
+      <d:entity ID="Staff" PARENT-URN="domain:domainlogic:school" URN="domain:domainlogic:school:Staff" xlink:title="Школьный персонал">
+        <definition xmlns="urn:com:servandserv:domainlogic:domain" xmlns:html="http://www.w3.org/1999/xhtml">
+			<html:p>
+				<is-a xlink:href="#Union">Объединение</is-a> всех учителей, административных работников и 
+				вспомогательного персонала обеспечивающих
+				организацию и реализацию учебно-воспитательного процесса в школе. Школьный персонал состоит из участников
+				каждый из которых в конкретный момент времени выполняет одну или более ролей. Можно выделить роли
+				преподавателей, директора, завучей и пр. Жизненный цикл школьного персонала совпадает с жизненным циклом школы.
+			</html:p>
+		</definition>
+      </d:entity>
+      <d:entity ID="Year" PARENT-URN="domain:domainlogic:school" URN="domain:domainlogic:school:Year" xlink:title="Параллель">
+        <definition xmlns="urn:com:servandserv:domainlogic:domain" xmlns:html="http://www.w3.org/1999/xhtml">
+			<html:p>
+				Параллель - это <is-a xlink:href="#Union">объединение</is-a> состоящее из других объединений -
+				<has-many xlink:href="#Form">классов</has-many>
+				в которых учатся ученики одного возраста. Параллель начинает свой жизненный цикл с 1 класса и заканчивает
+				в 10-12 классах в зависимости от периода обучения.
+			</html:p>
+		</definition>
+      </d:entity>
+      <d:entity ID="Form" PARENT-URN="domain:domainlogic:school" URN="domain:domainlogic:school:Form" xlink:title="Класс">
+        <definition xmlns="urn:com:servandserv:domainlogic:domain" xmlns:html="http://www.w3.org/1999/xhtml">
+			<html:p>
+				<is-a xlink:href="#Union">Объединение</is-a> совместно обучающихся людей. Жизненный цикл класса начинается
+				с момента начала обучения набранных в него учеников и заканчивается их выпуском. Кроме учеников
+				участие в классе принимают классные руководители, которые осуществляют общее управление процессом
+				образования, учителя, отвечающие за преподавание отдельных предметов. Состав участников в течении
+				жизненного цикла класса может существенным образом меняться.
+			</html:p>
+		</definition>
+      </d:entity>
+      <d:entity ID="HistoryName" PARENT-URN="domain:domainlogic:school" URN="domain:domainlogic:school:HistoryName" xlink:title="Историческое наименование">
+        <definition xmlns="urn:com:servandserv:domainlogic:domain" xmlns:html="http://www.w3.org/1999/xhtml">
+			<html:p>
+				<has-a xlink:href="#HistoryName:name">Наименование</has-a> какого-то объекта системы,
+				которое объект имел <has-a xlink:href="#HistoryName:dtStart">начиная</has-a> с определенной
+				даты <has-a xlink:href="#HistoryName:dtEnd">по</has-a> конкретную дату или по настоящий день.
+			</html:p>
+		</definition>
+      </d:entity>
+      <d:entity ID="Person" PARENT-URN="domain:domainlogic:school" URN="domain:domainlogic:school:Person" xlink:title="Персона">
+        <definition xmlns="urn:com:servandserv:domainlogic:domain" xmlns:html="http://www.w3.org/1999/xhtml">
+			<html:p>
+				Человеческий индивид, субъект отношений в рамках образовательного процесса. Обладает следующими атрибутами
+			</html:p>
+			<html:ul>
+				<html:li>
+					<has-a xlink:href="#Person:firstName">Имя</has-a>
+				</html:li>
+				<html:li>
+					<has-a xlink:href="#Person:secondName">Фамилия</has-a>
+				</html:li>
+				<html:li>
+					<has-a xlink:href="#Person:middleName">Отчество</has-a>
+				</html:li>
+				<html:li>
+					<has-a xlink:href="#Person:enName">Транслит полного имени</has-a>
+				</html:li>
+				<html:li>
+					<has-a xlink:href="#Person:DOB">Дата рождения</has-a>
+				</html:li>
+			</html:ul>
+			<html:p>
+				В нашем случае является участником множества объединений.
+				<is-a xlink:href="#Resource">Уникально</is-a> идентифицируется по своим
+				атрибутам. Связь между объединениями и участниками устанавливается
+				через <tl xlink:href="#TraversalRule">отношения</tl>. Примеры ролей в этих отношениях:
+			</html:p>
+			<html:ul>
+				<html:li>Директор школы</html:li>
+				<html:li>Завуч</html:li>
+				<html:li>Учитель</html:li>
+				<html:li>Классный руководитель</html:li>
+				<html:li>Ученик</html:li>
+				<html:li>...</html:li>
+			</html:ul>
+		</definition>
+      </d:entity>
+      <d:entity ID="Documents" PARENT-URN="domain:domainlogic:school" URN="domain:domainlogic:school:Documents" xlink:title="Коллекция документов">
+        <definition xmlns="urn:com:servandserv:domainlogic:domain" xmlns:html="http://www.w3.org/1999/xhtml">
+			<html:p>
+				Для отражения истории того или иного объекта документы объединяются в коллекции.
+				Каждая коллекция состоит из <has-many xlink:href="#Document">одного или более</has-many> документов.
+				Документы в коллекцию конкретного объекта отбираются на основе <tl xlink:href="#TraversalRule">отношений</tl>.
+			</html:p>
+		</definition>
+      </d:entity>
+      <d:entity ID="Document" PARENT-URN="domain:domainlogic:school" URN="domain:domainlogic:school:Document" xlink:title="Документ">
+        <definition xmlns="urn:com:servandserv:domainlogic:domain" xmlns:html="http://www.w3.org/1999/xhtml">
+			<html:p>
+				История объединения или конкретной персоны находит свое отражение в документах разного вида: фотографий,
+				свидетельств, публикаций и тп. Каждый документ <is-a xlink:href="#Resource">уникален</is-a> и представлен отдельным
+				<has-a xlink:href="#Document:href">файлом</has-a> в
+				графическом формате содержащем соответствующее изображение. Исторический момент в который возникает этот документ
+				является <has-a xlink:href="#Document:dt">датой документа</has-a>.
+			</html:p>
+			<html:p>
+				Каждый документ может быть связан с одним или несколькими объединениями или персонами. Связь обозначается
+				<tl xlink:href="#TraversalRule">отношениями</tl>.
+			</html:p>
+			<html:p>
+				Публикация документа связана с определенной последовательностью действий, которая находит свое отражение
+				в логе.
+			</html:p>
+		</definition>
+      </d:entity>
+      <d:entity ID="LogItem" PARENT-URN="domain:domainlogic:school" URN="domain:domainlogic:school:LogItem" xlink:title="Запись в журнале изменений">
+        <definition xmlns="urn:com:servandserv:domainlogic:domain" xmlns:html="http://www.w3.org/1999/xhtml">
+			<html:p>
+				Запись в журнале, отражающая определенное действие пользователя системы над ее ресурсами. Является
+				<is-a xlink:href="#Resource">ресурсом</is-a>.
+			</html:p>
+			<html:p>
+				Запись характеризуется <has-a xlink:href="#LogItem:dtCreate">временем совершения</has-a>
+				действия, его <has-a xlink:href="#LogItem:action">содержанием</has-a>, <has-a xlink:href="#LogItem:author">автором</has-a>
+				и связывается с ресурсами системы через отношения.
+			</html:p>
+		</definition>
+      </d:entity>
+      <d:entity ID="TraversalRule" PARENT-URN="domain:domainlogic:school" URN="domain:domainlogic:school:TraversalRule" xlink:title="Отношение между ресурсами">
+        <definition xmlns="urn:com:servandserv:domainlogic:domain" xmlns:html="http://www.w3.org/1999/xhtml">
+			<html:p>
+				Отношение характеризует ссылку на <has-a xlink:href="#Destination">ресурс</has-a> системы
+				<has-a xlink:href="#Source">другого ресурса</has-a> системы.
+				Отражает определенный <has-a xlink:href="#TraversalRule:role">тип связи</has-a> между объектами.
+			</html:p>
+			<html:p>
+				Ссылка <is-a xlink:href="#Resource">уникальна</is-a> и может иметь смысл какой-то период времени, 
+				поэтому у нее может быть
+				<has-a xlink:href="#TraversalRule:dtStart">время начала</has-a> действия и
+				<has-a xlink:href="#TraversalRule:dtEnd">время окончания</has-a>.
+			</html:p>
+		</definition>
+      </d:entity>
+      <d:entity ID="Source" PARENT-URN="domain:domainlogic:school" URN="domain:domainlogic:school:Source" xlink:title="Источник отношения">
+        <definition xmlns="urn:com:servandserv:domainlogic:domain" xmlns:html="http://www.w3.org/1999/xhtml">
+			<is-a xlink:href="#Resource">Ресурс</is-a>.
+		</definition>
+      </d:entity>
+      <d:entity ID="Destination" PARENT-URN="domain:domainlogic:school" URN="domain:domainlogic:school:Destination" xlink:title="Назначение отношения">
+        <definition xmlns="urn:com:servandserv:domainlogic:domain" xmlns:html="http://www.w3.org/1999/xhtml">
+			<is-a xlink:href="#Resource">Ресурс</is-a>.
+		</definition>
+      </d:entity>
+    </d:domain>
+  </d:domain>
+</d:domain>

@@ -1,0 +1,45 @@
+
+digraph usecase_ucpackage_domainlogic {
+		
+	subgraph clusterucpackage_domainlogic_User {
+		label="Пользователь";labelloc="b";peripheries=0;margin=0;pad=0;fontname=Tahoma;fontsize=10;URL="domain:domainlogic:actors:User";ucpackage_domainlogic_User
+	};
+	
+	"ucpackage_domainlogic_User" [label="",shapefile="/Users/kolpakov/vm/localhost/domainlogic/src/resources/images/stickman.svg",peripheries=0,margin=0];
+	subgraph clusterucpackage_domainlogic_AutorizedUser {
+		label="Авторизованый\nпользователь";labelloc="b";peripheries=0;margin=0;pad=0;fontname=Tahoma;fontsize=10;URL="domain:domainlogic:actors:AutorizedUser";ucpackage_domainlogic_AutorizedUser
+	};
+	
+	"ucpackage_domainlogic_AutorizedUser" [label="",shapefile="/Users/kolpakov/vm/localhost/domainlogic/src/resources/images/stickman.svg",peripheries=0,margin=0];
+	subgraph cluster_package {
+		style="dashed,bold";
+		label="ucpackage:domainlogic";
+		node [shape=ellipse,style="bold",color=grey,fontname=Tahoma,fontsize=12,height=.5];
+	    ucpackage_domainlogic_In [label="Заходит\nна сайт",tooltip="ucpackage:domainlogic:In",URL="ucpackage:domainlogic:In",fontname=Tahoma,fontsize=12];
+	    ucpackage_domainlogic_UseTimeMachine [label="Использует\n'машину\nвремени'",tooltip="ucpackage:domainlogic:UseTimeMachine",URL="ucpackage:domainlogic:UseTimeMachine",fontname=Tahoma,fontsize=12];
+	    ucpackage_domainlogic_UseDocsFeed [label="Просматривает\nленту\nдокументов",tooltip="ucpackage:domainlogic:UseDocsFeed",URL="ucpackage:domainlogic:UseDocsFeed",fontname=Tahoma,fontsize=12];
+	    ucpackage_domainlogic_LookAtDocument [label="Просматривает\nинформацию\nпо конкретному\nдокументу",tooltip="ucpackage:domainlogic:LookAtDocument",URL="ucpackage:domainlogic:LookAtDocument",fontname=Tahoma,fontsize=12];
+	}
+	// use
+	edge [fontname=Tahoma,fontsize=10]
+	edge [arrowhead="none",color=grey];
+	ucpackage_domainlogic_User -> ucpackage_domainlogic_In;
+	// proceed
+	node [shape=ellipse,style="bold,filled",height=.5,fillcolor=yellow,color=grey];
+	edge [arrowhead="vee",style="dashed,bold",label="«proceed»",color=red];
+	ucpackage_domainlogic_In -> ucpackage_domainlogic_UseTimeMachine;
+	ucpackage_domainlogic_In -> ucpackage_domainlogic_UseDocsFeed;
+	ucpackage_domainlogic_UseDocsFeed -> ucpackage_domainlogic_LookAtDocument;
+	edge [arrowhead="vee",style="dashed,bold",label="«proceed»",color=grey];
+	// invoke
+	edge [arrowhead="vee",style="dashed,bold",label="«invoke»",color=grey];
+	edge [arrowhead="vee",style="dashed,bold",label="«invoke»",color=blue];
+	// extend
+	edge [arrowhead="vee",style="dashed,bold",label="«extend»",color=green];
+	labelloc=t;
+	rankdir=LR;
+	compound=true;
+	color=grey;
+	fontsize=12;
+
+}

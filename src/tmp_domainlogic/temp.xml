@@ -1,0 +1,4 @@
+<?xml version='1.0' encoding='utf-8'?>
+<uc:ucpackage ID='ucpackage' xlink:title='Usecases package' xmlns:uc='urn:com:servandserv:domainlogic:ucpackage' xmlns:xlink='http://www.w3.org/1999/xlink' dir='/Users/kolpakov/vm/localhost/domainlogic/src'>
+<uc:ucpackage xlink:type='locator' xlink:href='domainlogic.xml' />
+</uc:ucpackage>

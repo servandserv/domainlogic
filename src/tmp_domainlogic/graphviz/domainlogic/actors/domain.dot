@@ -1,0 +1,21 @@
+digraph domain_domainlogic_actors {
+	labelloc=b;
+	labeljust=r;
+	fontsize=18;
+	fontcolor="#0000cc";
+	rankdir=LR;
+	compound=true;
+	node [shape=none,margin=0];
+        domain_domainlogic_actors_User [id="domain:domainlogic:actors:User",label=<<TABLE BORDER="0" CELLPADDING="8" CELLSPACING="0"><TR><TD ALIGN="CENTER" HREF="domain:domainlogic:actors:User" TITLE="domain:domainlogic:actors:User" PORT="domain_domainlogic_actors_User" BGCOLOR="#dddddd"><FONT COLOR="#0000cc">Пользователь</FONT></TD></TR></TABLE>>];
+	domain_domainlogic_actors_AuthorizedUser [id="domain:domainlogic:actors:AuthorizedUser",label=<<TABLE BORDER="0" CELLPADDING="8" CELLSPACING="0"><TR><TD ALIGN="CENTER" HREF="domain:domainlogic:actors:AuthorizedUser" TITLE="domain:domainlogic:actors:AuthorizedUser" PORT="domain_domainlogic_actors_AuthorizedUser" BGCOLOR="#dddddd"><FONT COLOR="#0000cc">Авторизованный пользователь</FONT></TD></TR><TR><TD ALIGN="CENTER" HREF="domain:domainlogic:actors:AutorizedUser:UUID" TITLE="" PORT="domain_domainlogic_actors_AutorizedUser_UUID" BGCOLOR="#ffffff"><FONT COLOR="#005A9C">domain:domainlogic:actors:AutorizedUser:UUID</FONT></TD></TR></TABLE>>];
+	
+	edge [dir="back",arrowtail="odiamond"];
+        
+	edge [dir="back",arrowtail="odiamond",headlabel="*"];
+		
+	edge [dir="forward",arrowhead="onormal",headlabel=""];
+		domain_domainlogic_actors_AuthorizedUser:domain_domainlogic_actors_AuthorizedUser -> domain_domainlogic_actors_User;
+		
+	
+}
+        

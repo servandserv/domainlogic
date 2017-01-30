@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<xsd:schema version="1.0"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xlink="http://www.w3.org/1999/xlink" 
+    targetNamespace="http://www.w3.org/1999/xlink"
+    elementFormDefault="qualified">
+    
+    <xsd:attribute name="label" type="xsd:string" />
+    <xsd:attribute name="href" type="xsd:string" />
+    <xsd:attribute name="title" type="xsd:string" />
+    <xsd:attribute name="from" type="xsd:string" />
+    <xsd:attribute name="to" type="xsd:string" />
+    <xsd:attribute name="type" type="xsd:string" />
+
+</xsd:schema>

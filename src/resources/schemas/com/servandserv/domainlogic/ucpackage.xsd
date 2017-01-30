@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<xsd:schema version="1.0"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns="urn:com:servandserv:domainlogic:ucpackage"
+    xmlns:d="urn:com:servandserv:domainlogic:domain"
+    xmlns:xlink="http://www.w3.org/1999/xlink" 
+    xmlns:html="http://www.w3.org/1999/xhtml"
+    targetNamespace="urn:com:servandserv:domainlogic:ucpackage"
+    elementFormDefault="qualified">
+    
+    <xsd:import namespace="http://www.w3.org/1999/xlink" schemaLocation="xlink.local.xsd"/>
+    <xsd:import namespace="urn:com:servandserv:domainlogic:domain" schemaLocation="domain.xsd"/>
+    
+    <xsd:element name="ucpackage" type="ucpackageType" />
+    <xsd:element name="actor" type="actorType" />
+    <xsd:element name="usecase" type="usecaseType" />
+    <xsd:element name="use" type="refType" />
+    <xsd:element name="proceed" type="refType" />
+    <xsd:element name="proceed-opt" type="refType" />
+    <xsd:element name="proceed-mand" type="refType" />
+    <xsd:element name="invoke" type="refType" />
+    <xsd:element name="invoke-opt" type="refType" />
+    <xsd:element name="invoke-mand" type="refType" />
+    <xsd:element name="extend" type="refType" />
+
+    <xsd:complexType name="ucpackageType">
+        <xsd:sequence>
+            <xsd:any namespace="http://www.w3.org/1999/xhtml" minOccurs="0" />
+            <xsd:element ref="actor" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:group ref="usecaseGroup" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element ref="script" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element ref="invoke" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element ref="invoke-opt" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element ref="invoke-mand" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element ref="proceed" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element ref="proceed-opt" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element ref="proceed-mand" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element ref="extend" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="ucpackage" type="ucpackageRefType" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+        <xsd:attribute name="ID" type="xsd:ID" />
+        <xsd:attribute ref="xlink:title" />
+    </xsd:complexType>
+
+    <xsd:group name="usecaseGroup">
+        <xsd:sequence>
+            <xsd:element ref="use" />
+            <xsd:element ref="usecase" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:group>
+
+    <xsd:complexType name="actorType">
+        <xsd:attribute ref="xlink:label" />
+        <xsd:attribute ref="xlink:href" />
+        <xsd:attribute ref="xlink:title" />
+    </xsd:complexType>
+
+    <xsd:complexType name="ucpackageRefType">
+        <xsd:attribute ref="xlink:type" />
+        <xsd:attribute ref="xlink:href" />
+    </xsd:complexType>
+    
+    <xsd:complexType name="refType">
+        <xsd:attribute ref="xlink:from" />
+        <xsd:attribute ref="xlink:to" />
+    </xsd:complexType>
+    
+    <xsd:complexType name="usecaseType" mixed="true">
+        <xsd:sequence>
+            <xsd:any namespace="http://www.w3.org/1999/xhtml urn:com:servandserv:domainlogic:domain ##targetNamespace" processContents="skip" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+        <xsd:attribute ref="xlink:label" />
+        <xsd:attribute ref="xlink:title" />
+    </xsd:complexType>
+    
+    <xsd:element name="script">
+        <xsd:complexType>
+            <xsd:simpleContent>
+                <xsd:extension base="xsd:string">
+                    <xsd:attribute name="type" type="scriptTypeType" />
+                </xsd:extension>
+            </xsd:simpleContent>
+        </xsd:complexType>
+    </xsd:element>
+    
+    <xsd:simpleType name="scriptTypeType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="text/jumly+sequence" />
+        </xsd:restriction>
+    </xsd:simpleType>
+    
+</xsd:schema>

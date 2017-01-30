@@ -74,6 +74,14 @@ domain2HTML="${dlPath}/resources/stylesheets/domain2html.xsl";
 ucpackage2HTML="${dlPath}/resources/stylesheets/ucpackage2html.xsl";
 docs2TOC="${dlPath}/resources/stylesheets/docs2TOC.xsl";
 
+find ${iniPath}/${sourcePath}/domain -type f | while read j; do
+    xmllint --noout --schema ${dlPath}/resources/schemas/com/servandserv/domainlogic/domain.xsd ${j}
+done
+
+find ${iniPath}/${sourcePath}/ucpackage -type f | while read j; do
+    xmllint --noout --schema ${dlPath}/resources/schemas/com/servandserv/domainlogic/ucpackage.xsd ${j}
+done
+
 # copy stickman svg to tmp build dir
 cp "${dlPath}/resources/images/stickman.svg" ${iniPath}/${tmpBuildPath}
 
