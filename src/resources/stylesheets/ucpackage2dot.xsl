@@ -188,11 +188,11 @@ digraph usecase_<xsl:value-of select="translate($UCPACKAGE-URN,':','_')" /> {
 		
 		<!--  добавим узлы прецедентов из других пакетов  -->
 		<xsl:if test="not($UCPACKAGE/uc:usecase[@URN=$tail_urn])">
-			<xsl:apply-templates select="$UCPACKAGES-SET//uc:usecase[@URN=$tail_urn]" mode="node" />
+			<xsl:apply-templates select="$USECASES[@URN=$tail_urn]" mode="node" />
 		</xsl:if>
 		
 		<xsl:if test="not($UCPACKAGE/uc:usecase[@URN=$head_urn])">
-			<xsl:apply-templates select="$UCPACKAGES-SET//uc:usecase[@URN=$head_urn]" mode="node" />
+			<xsl:apply-templates select="$USECASES[@URN=$head_urn]" mode="node" />
 		</xsl:if>
 		<xsl:text>
 	</xsl:text>

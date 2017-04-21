@@ -72,7 +72,7 @@ domain2Dot="${dlPath}/resources/stylesheets/domain2dot.xsl";
 ucpackage2Dot="${dlPath}/resources/stylesheets/ucpackage2dot.xsl";
 domain2HTML="${dlPath}/resources/stylesheets/domain2html.xsl";
 ucpackage2HTML="${dlPath}/resources/stylesheets/ucpackage2html.xsl";
-docs2TOC="${dlPath}/resources/stylesheets/docs2TOC.xsl";
+docs2TOC="${dlPath}/resources/stylesheets/docs2toc.xsl";
 
 find ${iniPath}/${sourcePath}/domain -type f | while read j; do
     xmllint --noout --schema ${dlPath}/resources/schemas/com/servandserv/domainlogic/domain.xsd ${j}
@@ -87,7 +87,7 @@ cp "${dlPath}/resources/images/stickman.svg" ${iniPath}/${tmpBuildPath}
 
 echo "<?xml version='1.0' encoding='utf-8'?><empty/>" > ${tmpBuildPath}/empty.xml
 # all domain model description files
-echo "<?xml version='1.0' encoding='utf-8'?>\n<d:domain ID='domain' base='${iniPath}/${sourcePath}' xlink:title='Domain models' xmlns:d='urn:com:servandserv:domainlogic:domain' xmlns:xlink='http://www.w3.org/1999/xlink'>" > $tmpXml
+echo "<?xml version='1.0' encoding='utf-8'?><d:domain ID='domain' base='${iniPath}/${sourcePath}' xlink:title='Domain models' xmlns:d='urn:com:servandserv:domainlogic:domain' xmlns:xlink='http://www.w3.org/1999/xlink'>" > $tmpXml
 cd ${sourcePath}/domain
 for j in *.xml; do
 	echo "<d:domain xlink:type='locator' xlink:href='${j}' />" >> $tmpXml
@@ -115,7 +115,7 @@ done
 
 cd ${iniPath}/${sourcePath}/ucpackage
 # all use cases packages
-echo "<?xml version='1.0' encoding='utf-8'?>\n<uc:ucpackage ID='ucpackage' xlink:title='Usecases package' xmlns:uc='urn:com:servandserv:domainlogic:ucpackage' xmlns:xlink='http://www.w3.org/1999/xlink' dir='${dlPath}'>" > $tmpXml
+echo "<?xml version='1.0' encoding='utf-8'?><uc:ucpackage ID='ucpackage' xlink:title='Usecases package' xmlns:uc='urn:com:servandserv:domainlogic:ucpackage' xmlns:xlink='http://www.w3.org/1999/xlink' dir='${dlPath}'>" > $tmpXml
 for j in *.xml; do
 	echo "<uc:ucpackage xlink:type='locator' xlink:href='${j}' />" >> $tmpXml
 done
